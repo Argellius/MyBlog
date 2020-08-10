@@ -30,8 +30,6 @@ $container->loadFromExtension('security', array(
         #Prihlaseni pro neprihlasene
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         #Odhlaseni pro prihlasene
-        - { path: ^/logout, roles: [ROLE_AUTOR,ROLE_ADMIN]}
-        #Debug pouze pro admina
-        - { path: ^/(_(profiler|wdt)|css|images|js)/ , roles: ROLE_ADMIN }
+        - { path: ^/logout, roles: [ROLE_USER,ROLE_ADMIN]}
     ],    
 ));

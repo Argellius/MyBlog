@@ -35,7 +35,7 @@
 </div>
 
 
-{% if is_granted("ROLE_ADMIN") or  (is_granted("AUTHOR") and app.user == article.Author) %}
+{% if is_granted("ROLE_ADMIN") or  (is_granted("ROLE_USER") and app.user == article.Author) %}
 <div class="card-group">
     <a class="btn btn-success btn-sm" href="{{ path('article_edit', {'id': article.id}) }}">Upravit</a>
     {{ include('article/_delete_form.html.twig') }}

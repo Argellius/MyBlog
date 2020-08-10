@@ -20,8 +20,7 @@ class MainController extends AbstractController
      */
     public function index(ArticleRepository $articleRepository, Request $request)
     {
-        $defaultData = ['message' => 'Type your message here'];
-        $form = $this->createFormBuilder($defaultData)
+        $form = $this->createFormBuilder()
         ->add('Key', TextType::class, array(
             'attr' => array(
                 'class'=> 'form-control form-control-borderless',

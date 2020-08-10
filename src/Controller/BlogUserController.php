@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/user")
@@ -17,6 +18,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class BlogUserController extends AbstractController
 {
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/", name="user_index", methods={"GET"})
      */
     public function index(BlogUserRepository $userRepository): Response
@@ -26,11 +28,17 @@ class BlogUserController extends AbstractController
         ]);
     }
 
-    /**
+    /**     
+     * @IsGranted("IS_AUTHENTICATED_ANONYMOUSLY")
      * @Route("/new", name="user_new", methods={"GET","POST"})
      */
     public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
+        //Nelze se registrovat, když je uživetel přihlášen
+        if ($this->getUser()) {
+            return $this->redirectToRoute('main');
+        }
+
         $user = new BlogUser();
         $form = $this->createForm(BlogUserType::class, $user);
         $form->handleRequest($request);
