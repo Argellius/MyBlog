@@ -40,6 +40,10 @@
   {% if is_granted('ROLE_ADMIN') %}
     <a href="{{ path('article_index') }}" class="btn btn-info">Editace všech článků</a>
   {% endif %}
+
+  {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}    
+    <a href="{{ path('change_password', {'id': app.user.Id}) }}" class="btn btn-success pull-right float-right">Změnit heslo</a>
+  {% endif %}
 </div>
 
 {% block body%}{% endblock%}

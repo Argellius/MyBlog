@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\BlogUser;
 use App\Form\BlogUserType;
+use App\Form\Model\ChangePassword;
+use App\Form\BlogUserChangePasswordType;
 use App\Repository\BlogUserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -110,4 +112,42 @@ class BlogUserController extends AbstractController
 
         return $this->redirectToRoute('user_index');
     }
+
+    /**
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     * @Route("/{id}/changePassword", name="change_password", methods={"GET","POST"})
+     */
+    public function changePassword(Request $request, BlogUser $user, UserPasswordEncoderInterface $encoder): Response
+    {
+        $u=$this->get('security.token_storage')->getToken()->getUser();
+        if(strcmp('ROLE_ADMIN',$u->getRoles()[0])!=0 && $user!=$u)return $this->redirectToRoute('main');
+
+
+        $changePasswordModel = new ChangePassword();
+        $form = $this->createForm(BlogUserChangePasswordType::class, $changePasswordModel);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $user = $this->getUser(); 
+                $password = $encoder->encodePassword(
+                        $user,
+                        $form->get('NewPassword')->getData()
+                );
+
+                $user->setPassword($password);
+                $em->persist($user);
+                $flush = $em->flush();
+                if ($flush === null) {                
+                    return $this->redirectToRoute("main");
+                }
+            } 
+        }
+
+    return $this->render('BlogUser/changePassword.html.twig', array(
+                'form' => $form->createView(),
+    ));
+}
 }

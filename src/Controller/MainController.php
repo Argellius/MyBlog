@@ -39,11 +39,7 @@ class MainController extends AbstractController
             'articles' => $articleRepository->findByContent($data['Key']),
             'form' => $form->createView(),
         ]);        
-        
-
     }
-
-
         return $this->render('home\index.html.twig', [
             'articles' => $articleRepository->findAll(),
             'form' => $form->createView(),

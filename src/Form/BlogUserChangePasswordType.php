@@ -16,20 +16,15 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 
-class BlogUserType extends AbstractType
+class BlogUserChangePasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $role = ['Autor' => '1', 'Admin' => '2'];
-
         $builder
-            ->add('Name', null, [
-                'attr' => ['class' => 'form-control']
-                ])
-            ->add('Login', null, [
-                'attr' => ['class' => 'form-control']
-                ])
-            ->add('Password', RepeatedType::class, [
+            ->add('OldPassword', PasswordType::class, array(
+                'label' => 'OldPassword'
+            ))
+            ->add('NewPassword', RepeatedType::class, [
                 'type' => PasswordType::class,                
                 'invalid_message' => 'Hesla se musí shodovat.',
                 'required' => true,
@@ -47,21 +42,25 @@ class BlogUserType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('Role',  ChoiceType::class, ['choices' => $role, 'attr' => ['class' => 'form-control']])           
             ->add('SignUp', SubmitType::class, [
-                'label' => 'Odeslat',
+                'label' => 'Změnit',
                 'attr' => ['class' => 'btn btn-success']
                 ])
             
             
                         ;
     }
-  
 
-    public function configureOptions(OptionsResolver $resolver)
+
+    public function setDefaultOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => BlogUser::class,
-        ]);
+        $resolver->setDefaults(array(
+            'data_class' => 'App\Form\Model\ChangePassword',
+        ));
+    }
+    
+    public function getName()
+    {
+        return 'change_passwd';
     }
 }
