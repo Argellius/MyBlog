@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+    
+<div style="margin-left: 50px;" class="container">
+
+    <div class="row">
+
+      <!-- Post Content Column -->
+      <div class="col-lg-15">
+        <h1 class="mt-4">{{article.Title}}</h1>
+            <p class="lead">
+                od
+                    <a href="#">{{article.Author}}</a>
+                            
+                <hr>
+            
+                <p>Publikováno dne {{article.CreatedAt|date('Y-m-d H:i:s')}}</p>
+
+                <hr>
+    
+                <p class="lead">
+                    {{article.Content |nl2br}} <!-- nl2br include line breaks/ newline   --> 
+                </p>
+            </p> 
+             {% if article.UpdatedAt != NULL %}
+            <h6 style="text-align:right">Aktualizováno dne {{article.UpdatedAt|date('Y-m-d H:i:s')}}</h6>
+            {% endif %}
+        </div>      
+          
+    </div>
+    
+</div>
+
+
+{% if is_granted("ROLE_ADMIN") or  (is_granted("AUTHOR") and app.user == article.Author) %}
+<div class="card-group">
+    <a class="btn btn-success btn-sm" href="{{ path('article_edit', {'id': article.id}) }}">Upravit</a>
+    {{ include('article/_delete_form.html.twig') }}
+</div>
+    {% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+<style>
+.mytable{
+    margin: auto; 
+    width: 300px;
+    text-align: center;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<table class="table table-dark mytable">
+    <thead>
+        <tr>
+            <th>Jméno</th>
+            <td>Adam Černý</td>
+        </tr>
+        <tr>
+            <th>Mobil: </th>
+            <td>+420 733 277 858</td>
+        </tr>
+        <tr>
+            <th>Email: </th>
+            <td>adamcerny0@gmail.com</td>
+        </tr>
+        </thead>
+</table>
+{% endblock %}

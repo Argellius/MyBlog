@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New User{% endblock %}
+{% block stylesheets %}
+<style>
+td{
+    font-weight:  bold;
+    
+}
+
+</style>
+{% endblock %}
+
+
+
+
+{% block body %}
+
+    <h1 style="text-align: center;">Registrace</h1> <br>
+    <div class="form-group centered">
+    {{ include('BlogUser/_form.html.twig') }}
+</div>
+{% endblock %}

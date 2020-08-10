@@ -1,0 +1,21 @@
+{{ form_start(form) }}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Titulek</th>
+            <td >{{ form_widget(form.Title) }}</td>
+        </tr>
+        <tr>
+            <th>Krátký popis</th>
+            <td>{{ form_widget(form.Description) }}</td>
+        </tr>
+        <tr>
+            <th>Obsah</th>
+            <td>{{ form_widget(form.Content) }}</td>            
+        </tr>
+        {{ form_widget(form.UpdatedAt) }}
+    </thead>    
+</table>
+    <button class="btn btn-danger">{{ button_label|default('Uložit') }}</button>
+    
+{{ form_end(form) }} <!-- {'render_rest': false} Hiding the missing fields from the form -->

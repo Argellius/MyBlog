@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Hobbití blog</title>
+    <link rel="stylesheet" href="{{ asset('build/mystyle.css') }}">    
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('blog-icon.ico') }}" />    
+    {{encore_entry_link_tags('app')}} <!--Bootsrap-->
+    {% block stylesheets%}{% endblock%}
+  </head>
+
+  <header>
+    <nav class="navbar navbar-expand-lg nav nav-tabs navbar-light bg-light">
+        <h5><a class="navbar-brand" href="{{ path('main') }}">Blog | Černý Adam</a></h5>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">    
+            <div class="navbar-nav"> 
+              <a class="nav-link {% if app.request.attributes.get('_route') == 'main' %}nav-link active{% endif %}" href="{{ path('main') }}"}}>Hlavní stránka</a>
+              <a class="nav-link {% if app.request.attributes.get('_route') == 'contact' %}nav-link active{% endif %}" href="{{ path('contact') }}">Kontakt</a>
+            </div>
+          </div> 
+
+      <div class="StatusAuth">
+          {% if app.user %}
+                  Přihlášen jako <b>{{ app.user.username }}</b>, <a class="btn btn-info" href="{{ path('app_logout') }}">Logout</a>
+          {% else %}
+                  Nepřihlášen, <a class="btn btn-info" href="{{ path('app_login') }}">Login</a>
+          {% endif %}
+        </div>
+
+        {% block search %} {% endblock %}
+    </div>
+  </nav>
+</header>
+
+<div class="base-buttons">
+  {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}    
+    <a href="{{ path('article_new') }}" class="btn btn-success">Přidat nový článek</a>
+  {% endif %}
+  
+  {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('article_index') }}" class="btn btn-info">Editace všech článků</a>
+  {% endif %}
+</div>
+
+{% block body%}{% endblock%}
+
+</html>

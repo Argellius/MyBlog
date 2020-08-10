@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editace článků{% endblock %}
+
+{% block body %}
+    <h1>Editace článků</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Titulek</th>
+                <th>Krátký popis</th>
+                <th>Obsah</th>
+                <th>Vytvořeno</th>
+                <th>Updatováno</th>
+                <th>Autor</th>
+                <th>Akce</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for article in articles %}
+            <tr>
+                <td>{{ article.id }}</td>
+                <td>{{ article.Title }}</td>
+                <td>{{ article.Description }}</td>
+                <td>{{ article.Content }}</td>
+                <td>{{ article.CreatedAt ? article.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ article.UpdatedAt ? article.UpdatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ article.Author }}</td>
+                <td>
+                    <a style="margin-bottom: 10px;" class="btn btn-info" href="{{ path('article_show', {'id': article.id}) }}">Zobrazit</a>
+                    <a class="btn btn-info" href="{{ path('article_edit', {'id': article.id}) }}">Upravit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

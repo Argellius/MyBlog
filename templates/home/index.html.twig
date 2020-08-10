@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block search %}
+    {{ form_start(form) }}
+      <div class="form-inline my-2 my-lg-0">
+        {{ form_widget(form.Key) }}
+        {{ form_widget(form.Submit) }}
+      </div>
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block body %}
+<div class="card-group">
+    {% for article in articles %}
+    <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
+        <div class="card">
+            <div class="#">
+                <h4 class="card-title">{{ article.Title }}</h4>
+                <div class="card-description">
+                    {{ article.Description }}
+                </div>
+            </div>
+            <div class="card-footer">
+                <small>Vytvořeno: {{ article.CreatedAt.format('d/m/Y') }}</small><br>
+                <small>Autor: {{ article.Author }}</small>
+                <a class="btn btn-info float-right btn-sm" href="{{ path('article_show', {'id': article.id}) }}">Přečíst</a>
+            </div>
+        </div>        
+    </div>    
+    {% else %}
+    <div>no records found</div>
+    {% endfor %}
+    
+</div>
+
+{% endblock %}
