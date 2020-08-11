@@ -55,4 +55,16 @@ class MainController extends AbstractController
         return $this->render('home\contact.html.twig');        
         
     }
+
+   /**
+     * @Route("/downloadCV", name="downloadCV")
+     */
+    public function downloadCurriculumVitae()
+    {
+        $pdfPath = $this->getParameter('dirDownload').'\cv_blog.pdf';
+
+        return $this->file($pdfPath); 
+        
+    }
+
 }

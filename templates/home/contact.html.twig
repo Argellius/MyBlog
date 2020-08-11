@@ -7,6 +7,11 @@
     width: 300px;
     text-align: center;
 }
+.downloadCV{
+    text-align: center;
+    margin-right: 10%;
+    margin-top: 10px;
+}
 </style>
 {% endblock %}
 
@@ -27,4 +32,7 @@
         </tr>
         </thead>
 </table>
+<div class="downloadCV">
+    <a class="btn btn-info" href="{{ path('downloadCV') }}">Stáhnout CV</a>
+</div>
 {% endblock %}
