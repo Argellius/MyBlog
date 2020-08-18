@@ -6,6 +6,7 @@ use App\Entity\BlogUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+
 /**
  * @method BlogUser|null find($id, $lockMode = null, $lockVersion = null)
  * @method BlogUser|null findOneBy(array $criteria, array $orderBy = null)

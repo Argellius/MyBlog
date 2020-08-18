@@ -38,6 +38,7 @@ class BlogUserController extends AbstractController
      */
     public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
+        
         //Nelze se registrovat, když je uživetel přihlášen
         if ($this->getUser()) {
             return $this->redirectToRoute('main');

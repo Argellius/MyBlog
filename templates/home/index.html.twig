@@ -1,12 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block search %}
-    {{ form_start(form) }}
+    {{ form_start(formSearch) }}
       <div class="form-inline my-2 my-lg-0">
-        {{ form_widget(form.Key) }}
-        {{ form_widget(form.Submit) }}
+        {{ form_widget(formSearch.Key) }}
+        {{ form_widget(formSearch.Submit) }}
       </div>
-    {{ form_end(form) }}
+    {{ form_end(formSearch) }}
+
+{% endblock %}
+
+{% block selectDay %}
+    {{ form_start(formSelectDay, {'attr': {'id': 'form_selectDay'}}) }}
+        {{ form_errors(formSelectDay) }}
+        {{ form_widget(formSelectDay.PublishAt, {'attr': {'class': 'selectDaySelect form-control'}}) }}        
+    {{ form_end(formSelectDay) }}
 
 {% endblock %}
 
@@ -35,3 +43,14 @@
 </div>
 
 {% endblock %}
+
+{% block jquery %}
+<script>
+    jQuery(function($) {
+        $(".selectDaySelect").change(function() { //put class or id of your select input
+        $('#form_selectDay').submit();
+        });
+    });
+</script>
+
+{%endblock%}

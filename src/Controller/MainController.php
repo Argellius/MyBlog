@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\ArticleRepository;
 use App\Entity\Article;
 use App\Form\ArticleType;
+use App\Form\SelectDayType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,29 +21,55 @@ class MainController extends AbstractController
      */
     public function index(ArticleRepository $articleRepository, Request $request)
     {
-        $form = $this->createFormBuilder()
-        ->add('Key', TextType::class, array(
-            'attr' => array(
-                'class'=> 'form-control form-control-borderless',
-                'placeholder' => 'Hledat...')                        
-            ))
-        ->add('Submit', SubmitType::class, array(
-            'attr' => array('class'=> 'btn btn-info', 'style' =>'margin-left:10px;')
+        $formSearch = $this->createFormBuilder()
+            ->add('Key', TextType::class, array(
+                'attr' => array(
+                    'class'=> 'form-control form-control-borderless',
+                    'placeholder' => 'Hledat...')                        
                 ))
-        ->getForm();
+            ->add('Submit', SubmitType::class, array(
+                'attr' => array('class'=> 'btn btn-info', 'style' =>'margin-left:10px;'),
+                'label' => 'Najdi', 
+                    ))
+            ->getForm();
+        $formSearch->handleRequest($request);
 
-        $form->handleRequest($request);
+        $formSelectDay = $this->createForm(SelectDayType::class);
+        $formSelectDay->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
+
+        if ($formSearch->isSubmitted() && $formSearch->isValid()) {
+            $data = $formSearch->getData();
                 return $this->render('home\index.html.twig', [
             'articles' => $articleRepository->findByContent($data['Key']),
-            'form' => $form->createView(),
+            'formSearch' => $formSearch->createView(),
+            'formSelectDay' => $formSelectDay->createView(),
         ]);        
-    }
+        }
+        
+        if ($formSelectDay->isSubmitted() && $formSelectDay->isValid()) {            
+            
+            $data=null;
+            if ( $formSelectDay->get('PublishAt')->getData() != null )
+            {
+                $data = $formSelectDay->get('PublishAt')->getData()->getPublishAt();
+
+            }                
+
+            return $this->render('home\index.html.twig', [
+                'articles' => $data == null ? $articleRepository->findAll() :
+                 $articleRepository->findBy(
+                    ['PublishAt' => $data],
+                ),
+                'formSearch' => $formSearch->createView(),
+                'formSelectDay' => $formSelectDay->createView(),
+        ]);        
+        }     
+
         return $this->render('home\index.html.twig', [
             'articles' => $articleRepository->findAll(),
-            'form' => $form->createView(),
+            'formSearch' => $formSearch->createView(),
+            'formSelectDay' => $formSelectDay->createView(),
         ]);        
         
     }

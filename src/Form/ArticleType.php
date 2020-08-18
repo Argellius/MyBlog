@@ -22,6 +22,10 @@ class ArticleType extends AbstractType
             ->add('Content', TextareaType::class, array(
                 'attr' => array('class' => 'TextAreaStyle')
                 ))
+            ->add('PublishAt', null, array(
+                'attr' => array('class' => 'selectpicker'),
+                'data' => new \DateTime()
+                ))
             ->add('UpdatedAt', null, array(
                 'data' => new \DateTime(),
                 'attr' => array('class' => 'hide_updatedAt')

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
@@ -48,6 +49,10 @@ class Article
      */
     private $UpdatedAt;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $PublishAt;
 
     //----------------------------------------------------------------------------------------------------
 
@@ -55,6 +60,7 @@ class Article
     {
     $this->CreatedAt = new \DateTime();    
     $this->UpdatedAt = NULL;    
+    
     }
 
     public function getId(): ?int
@@ -134,4 +140,25 @@ class Article
         return $this;
     }
 
+
+    public function getPublishAt(): ?\DateTimeInterface
+    {
+        return $this->PublishAt;
+    }
+
+    public function setPublishAt(\DateTimeInterface $PublishAt): self
+    {
+        $this->PublishAt = $PublishAt;
+
+        return $this;
+    }
+
+
+    
+    //---------
+    public function __toString() {
+
+        return $this->Title;
+    }
+    
 }

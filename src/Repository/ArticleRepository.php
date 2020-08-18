@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @method Article|null find($id, $lockMode = null, $lockVersion = null)
@@ -37,4 +38,18 @@ class ArticleRepository extends ServiceEntityRepository
 
         
     }
+
+
+    /**
+     * @return Article[] Returns an array of Article objects
+     */
+    public function findAllDateofPublish()
+    {
+        $query = $this->createQueryBuilder('a')        
+        ->select('a.PublishAt')
+        ->getQuery()
+        ->getResult();        
+        //var_dump($query);die;        
+    }
+
 }
