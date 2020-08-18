@@ -38,7 +38,7 @@ security:
         #Přihlášení pro neauthentifikovaný
         - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY  }
         #Registrace
-        - { path: ^/user/new, role: IS_AUTHENTICATED_ANONYMOUSLY && !IS_AUTHENTICATED_FULLY }
+        - { path: ^/user/new, role: IS_AUTHENTICATED_ANONYMOUSLY }
         #Odhlášení pro authentifikovaný
         - { path: ^/logout, role: [ROLE_USER,ROLE_ADMIN]}
         # - { path: ^/admin, roles: ROLE_ADMIN }
